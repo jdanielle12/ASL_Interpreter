@@ -1,6 +1,9 @@
 # Ignore Dataset
 ASL_Alphabet_Dataset/
 
+# Ignore pkl files
+*.pkl
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
