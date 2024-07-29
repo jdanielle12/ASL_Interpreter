@@ -34,8 +34,11 @@ def preprocess_landmarks(landmarks, fixed_length=63):
 
     return reshaped_data
 
-#Capture video from webcam
+#Capture video from webcam (MAC USERS)
 cap = cv2.VideoCapture(1, cv2.CAP_AVFOUNDATION)
+
+# Capture video from webcam (WINDOWS USERS)
+cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
 
 while cap.isOpened():
     ret, frame = cap.read()
