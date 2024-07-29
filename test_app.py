@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import mediapipe as mp
+import gradio as gr 
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
@@ -73,3 +74,5 @@ while cap.isOpened():
 # Release the webcam and close windows
 cap.release()
 cv2.destroyAllWindows()
+
+
