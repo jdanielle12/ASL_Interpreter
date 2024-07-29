@@ -35,7 +35,7 @@ def preprocess_landmarks(landmarks, fixed_length=63):
     return reshaped_data
 
 #Capture video from webcam
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1, cv2.CAP_AVFOUNDATION)
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -104,7 +104,7 @@ cv2.destroyAllWindows()
 # Create a Gradio interface
 iface = gr.Interface(
     fn=preprocess_landmarks, 
-    inputs=gr.Image(source="webcam", tool="editor", type="numpy"),
+    inputs=gr.Image(source="label", tool="editor", type="numpy"),
     outputs="text",
     title="ASL Sign Detection",
     description="Translate American Sign Language (ASL) signs into text."   
