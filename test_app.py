@@ -34,7 +34,7 @@ def preprocess_landmarks(landmarks, fixed_length=63):
 
     return reshaped_data
 
-# Capture video from webcam
+#Capture video from webcam
 cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
@@ -42,63 +42,68 @@ while cap.isOpened():
     if not ret:
         break
 
-    # Convert the BGR image to RGB
+    #Convert the BGR image to RGB
     img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    # Process the frame to detect hands
+    #Process the frame to detect hands
     results = hands.process(img_rgb)
 
     if results.multi_hand_landmarks:
-        # Preprocess landmarks for prediction
+        #Preprocess landmarks for prediction
         landmarks = preprocess_landmarks(results.multi_hand_landmarks, fixed_length=63)
         
-        # Predict the sign
+        #Predict the sign
         prediction = model.predict(landmarks)
         class_idx = np.argmax(prediction)
         class_label = label_encoder.inverse_transform([class_idx])[0]
 
-        # Draw the landmarks and label on the frame
+        #Draw the landmarks and label on the frame
         for hand_landmarks in results.multi_hand_landmarks:
             mp.solutions.drawing_utils.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
         
-        # Display the label
+        #Display the label
         cv2.putText(frame, class_label, (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 3, cv2.LINE_AA)
 
-    # Display the frame
+    #Display the frame
     cv2.imshow('ASL Sign Detection', frame)
 
-    # Break the loop on 'q' key press
+    #Break the loop on 'q' key press
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Release the webcam and close windows
+#Release the webcam and close windows
 cap.release()
 cv2.destroyAllWindows()
 
 # Function to predict the sign from an image frame
-def predict_from_frame(frame):
-    # Convert the BGR image to RGB
-    img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+# def predict_from_frame(frame):
+#     # Convert the BGR image to RGB
+#     img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     
-    # Process the frame to detect hands
-    results = hands.process(img_rgb)
+#     # Process the frame to detect hands
+#     results = hands.process(img_rgb)
     
-    if results.multi_hand_landmarks:
-        # Preprocess landmarks for prediction
-        landmarks = preprocess_landmarks(results.multi_hand_landmarks, fixed_length=63)
+#     if results.multi_hand_landmarks:
+#         # Preprocess landmarks for prediction
+#         landmarks = preprocess_landmarks(results.multi_hand_landmarks, fixed_length=63)
         
-        # Predict the sign
-        prediction = model.predict(landmarks)
-        class_idx = np.argmax(prediction)
-        class_label = label_encoder.inverse_transform([class_idx])[0]
+#         # Predict the sign
+#         prediction = model.predict(landmarks)
+#         class_idx = np.argmax(prediction)
+#         class_label = label_encoder.inverse_transform([class_idx])[0]
         
-        return class_label
+#         return class_label
     
-    return 'No hand detected'
+#     return 'No hand detected'
+
+# # Gradio interface function
+# def gradio_interface(frame):
+#     # Convert the frame to the format needed for prediction
+#     return predict_from_frame(frame)
 
 # Create a Gradio interface
 iface = gr.Interface(
-    fn=predict_from_frame, 
+    fn=preprocess_landmarks, 
     inputs=gr.Image(source="webcam", tool="editor", type="numpy"),
     outputs="text",
     title="ASL Sign Detection",
