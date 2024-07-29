@@ -75,4 +75,35 @@ while cap.isOpened():
 cap.release()
 cv2.destroyAllWindows()
 
+# Function to predict the sign from an image frame
+def predict_from_frame(frame):
+    # Convert the BGR image to RGB
+    img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    
+    # Process the frame to detect hands
+    results = hands.process(img_rgb)
+    
+    if results.multi_hand_landmarks:
+        # Preprocess landmarks for prediction
+        landmarks = preprocess_landmarks(results.multi_hand_landmarks, fixed_length=63)
+        
+        # Predict the sign
+        prediction = model.predict(landmarks)
+        class_idx = np.argmax(prediction)
+        class_label = label_encoder.inverse_transform([class_idx])[0]
+        
+        return class_label
+    
+    return 'No hand detected'
 
+# Create a Gradio interface
+iface = gr.Interface(
+    fn=predict_from_frame, 
+    inputs=gr.Image(source="webcam", tool="editor", type="numpy"),
+    outputs="text",
+    title="ASL Sign Detection",
+    description="Translate American Sign Language (ASL) signs into text."   
+) 
+
+# Launch the Gradio app
+iface.launch()
