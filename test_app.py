@@ -38,7 +38,7 @@ def preprocess_landmarks(landmarks, fixed_length=63):
 cap = cv2.VideoCapture(1, cv2.CAP_AVFOUNDATION)
 
 # Capture video from webcam (WINDOWS USERS)
-cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
+#cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -77,41 +77,3 @@ while cap.isOpened():
 #Release the webcam and close windows
 cap.release()
 cv2.destroyAllWindows()
-
-# Function to predict the sign from an image frame
-# def predict_from_frame(frame):
-#     # Convert the BGR image to RGB
-#     img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    
-#     # Process the frame to detect hands
-#     results = hands.process(img_rgb)
-    
-#     if results.multi_hand_landmarks:
-#         # Preprocess landmarks for prediction
-#         landmarks = preprocess_landmarks(results.multi_hand_landmarks, fixed_length=63)
-        
-#         # Predict the sign
-#         prediction = model.predict(landmarks)
-#         class_idx = np.argmax(prediction)
-#         class_label = label_encoder.inverse_transform([class_idx])[0]
-        
-#         return class_label
-    
-#     return 'No hand detected'
-
-# # Gradio interface function
-# def gradio_interface(frame):
-#     # Convert the frame to the format needed for prediction
-#     return predict_from_frame(frame)
-
-# Create a Gradio interface
-iface = gr.Interface(
-    fn=preprocess_landmarks, 
-    inputs=gr.Image(source="label", tool="editor", type="numpy"),
-    outputs="text",
-    title="ASL Sign Detection",
-    description="Translate American Sign Language (ASL) signs into text."   
-) 
-
-# Launch the Gradio app
-iface.launch()
