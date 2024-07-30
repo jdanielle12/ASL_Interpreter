@@ -4,6 +4,7 @@ import tensorflow as tf
 import mediapipe as mp
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+import platform
 
 # Load the trained model
 model = tf.keras.models.load_model('asl_model_tuned.keras')
@@ -33,11 +34,14 @@ def preprocess_landmarks(landmarks, fixed_length=63):
 
     return reshaped_data
 
-# Capture video from webcam (MAC USERS)
-cap = cv2.VideoCapture(1, cv2.CAP_AVFOUNDATION)
+if platform.system() == 'Darwin':
+    # Capture video from webcam (MAC USERS)
+    cap = cv2.VideoCapture(1, cv2.CAP_AVFOUNDATION)
+else:
+    # Capture video from webcam (WINDOWS USERS)
+    cap = cv2.VideoCapture(0)
 
-# Capture video from webcam (WINDOWS USERS)
-#cap = cv2.VideoCapture(0)
+# Loop to capture frames from the webcam
 
 while cap.isOpened():
     ret, frame = cap.read()
