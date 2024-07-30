@@ -1,1 +1,3 @@
-# ASL_Interpreter
+# American Sign Language (ASL) Detection Project
+
+## Overview
