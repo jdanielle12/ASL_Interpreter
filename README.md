@@ -34,7 +34,7 @@ Ensure the dataset is placed in the `ASL_Alphabet_Dataset` directory as describe
 3. The trained model will be saved as `asl_model_tuned.keras`.
 
 ### Running the Real-time Detection App
-1. **Ensure your webcam is connected and has the correct permissions**.
+1. **Ensure your webcam is connected**.
 2. **Run the** `test_app.py` **script**: `python test_app.py`
 3. The application will open a window displaying the webcam feed. Perform ASL gestures in front of the camera, and the predicted letter will be displayed on the screen. 
 
@@ -47,3 +47,32 @@ Here is an example of how to use the ASL Interpreter application:
 
 ## Code Explanation
 ### `asl.ipynb`
+* **Dependencies**: Import necessary libraries such as OpenCV, MediaPipe, TensorFlow, NumPy, and others for data preprocessing, model building, and visualization.
+* **Dataset Processing**: Loads the dataset, extracts hand landmarks using MediaPipe, and stores the processed data in a pickle file. 
+* **Data Preparation**: Encodes labels, splits the data into training and testing sets, and normalizes the input features.
+* **Model Training**: Builds and trains a CNN model using the processed data. 
+* **Model Evaluation**: Evaluates the trained model on the test dataset and daves the model for later use. 
+* **NOTE: THIS PROJECT USES A VERY LARGE DATASET. THE MODEL IS ALREADY LOADED AND TRAINED FOR YOU. THEREFORE, YOU DON'T NEED TO RUN THE MODEL TO USE THIS PROGRAM UNLESS YOU PLAN ON ADDING MORE TRAINING AND TESTING DATA**
+
+### `test_app.py`
+* **Model Loading**: Loads the trained model and initalizes MediaPipe for hand detection.
+* **Real-time Processing**: Captures video frames from the webcam, detects hand landmarks, and predicts ASL gestures.
+* **Display**: Annotates the video feed with detected landmarks and predicted letters.
+
+## Troubleshooting
+* **Webcam Not Detected**: Ensure your webcam is properly connected and accessible. Check your system's camera settings and permissions.
+* **Model Accuracy**: If the model's accuracy is low, consider increasing the training dataset size, adjusting model architecture, or tuning hyperparameters.
+
+## Examples
+
+## Acknowledgments
+* **MediaPipe**: For providing an efficient and robust solution for hand landmark detection.
+* **TensorFlow**: For enabling the development and deployment of deep learning models.
+* **ASL Alphabet Dataset**: For providing a comprehensive dataset of ASL gestures.
+  * Which we sourced from: `https://www.kaggle.com/datasets/debashishsau/aslamerican-sign-language-aplhabet-dataset`.  
+
+## Contributors
+* Jacqueline Columbro
+* Jamie McGraner
+* Anand Punwani
+* Anthony Wilson
