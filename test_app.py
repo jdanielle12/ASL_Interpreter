@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import mediapipe as mp
-import pyttsx3
 from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
@@ -12,9 +11,6 @@ model = tf.keras.models.load_model('asl_model_tuned.keras')
 # Initialize MediaPipe Hands
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(static_image_mode=False, max_num_hands=2, min_detection_confidence=0.3)
-
-# Initialize pyttsx3 text-to-speech engine
-engine = pyttsx3.init()
 
 # Label encoder to convert numerical labels back to original labels
 label_encoder = LabelEncoder()
@@ -38,13 +34,10 @@ def preprocess_landmarks(landmarks, fixed_length=63):
     return reshaped_data
 
 # Capture video from webcam (MAC USERS)
-#cap = cv2.VideoCapture(1, cv2.CAP_AVFOUNDATION)
+cap = cv2.VideoCapture(1, cv2.CAP_AVFOUNDATION)
 
 # Capture video from webcam (WINDOWS USERS)
-cap = cv2.VideoCapture(0)
-
-# Initialize a variable to hold the previous prediction, to prevent repeat announcements
-previous_label = None
+#cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -65,24 +58,6 @@ while cap.isOpened():
         prediction = model.predict(landmarks)
         class_idx = np.argmax(prediction)
         class_label = label_encoder.inverse_transform([class_idx])[0]
-        
-        # If the predicted label is different from the previous label, announce it
-        if class_label != previous_label:
-
-            # Use TTS to speak out the label
-            if class_label == "space":
-                engine.say(" ")
-
-            elif class_label == "del":
-                engine.say("delete")
-            
-            elif class_label != "nothing":
-                engine.say(class_label)
-
-            engine.runAndWait()
-
-            # Update previous label
-            previous_label = class_label
     
         #Draw the landmarks and label on the frame
         for hand_landmarks in results.multi_hand_landmarks:
