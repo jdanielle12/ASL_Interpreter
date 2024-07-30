@@ -65,7 +65,7 @@ Here is an example of how to use the ASL Interpreter application:
 
 ## Examples
 ![Hand Recognition](images/Hand_recognition.png)
-![Confusion Matrix](images/Confusion_Matrix.png)
+![Confusion Matrix](images/confusionmatrix.png)
 
 ## Acknowledgments
 * **MediaPipe**: For providing an efficient and robust solution for hand landmark detection.
