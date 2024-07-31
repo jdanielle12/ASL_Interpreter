@@ -66,7 +66,9 @@ Here is an example of how to use the ASL Interpreter application:
 ## Examples
 ![Hand Recognition](images/Hand_recognition.png)
 ![Confusion Matrix](images/confusionmatrix.png)
-
+![ASL Clip](images/ASL_Clip.gif)
+![Full ASL Clip](images/ASL_Edited.gif)
+![OSU Full Clip](images/OSU_edited.gif)
 
 ## Acknowledgments
 * **MediaPipe**: For providing an efficient and robust solution for hand landmark detection.
